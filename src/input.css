@@ -1,0 +1,93 @@
+@import "tailwindcss";
+@source "../public";
+
+
+@font-face {
+  font-family: "Atkinson Hyperlegible Next";
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url("../fonts/atkinson-next.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Atkinson Hyperlegible Mono";
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url("../fonts/atkinson-mono.woff2") format("woff2");
+}
+
+
+:root {
+  --bg: #f7f5ee;
+  --surface: #ffffff;
+  --raised: #efede4;
+  --text: #1f1e1d;
+  --muted: #5b5a57;
+  --dim: #7a7873;
+  --line: rgb(31 30 29 / 0.14);
+  --tok-meta: #6d4ae0;
+  --tok-tag: #0b6bb5;
+  --tok-attr: #a55a00;
+  --tok-str: #1e7a3c;
+  --tok-punc: #6b7280;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #141b26;
+    --surface: #1b2431;
+    --raised: #243042;
+    --text: #eaf0f7;
+    --muted: #a9b5c6;
+    --dim: #8896ab;
+    --line: rgb(234 240 247 / 0.1);
+    --tok-meta: #b79cff;
+    --tok-tag: #6fc3ff;
+    --tok-attr: #ffc27a;
+    --tok-str: #8ee0a6;
+    --tok-punc: #9aa7ba;
+    color-scheme: dark;
+  }
+}
+
+@theme inline {
+  --font-sans: "Atkinson Hyperlegible Next", "Atkinson Hyperlegible", system-ui, sans-serif;
+  --font-mono: "Atkinson Hyperlegible Mono", ui-monospace, monospace;
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-ink: var(--text);
+  --color-muted: var(--muted);
+  --color-dim: var(--dim);
+  --color-line: var(--line);
+  --color-tok-meta: var(--tok-meta);
+  --color-tok-tag: var(--tok-tag);
+  --color-tok-attr: var(--tok-attr);
+  --color-tok-str: var(--tok-str);
+  --color-tok-punc: var(--tok-punc);
+}
+@theme {
+  --color-signal: #ffc72c;
+  --color-signal-ink: #16130a;
+}
+
+
+@layer components {
+  .code { counter-reset: ln; }
+  .code .l { counter-increment: ln; display: block; min-height: 1.5em; }
+  .code .l::before {
+    content: counter(ln);
+    display: inline-block;
+    width: 3.25rem;
+    padding-right: 1rem;
+    text-align: right;
+    color: var(--dim);
+    user-select: none;
+  }
+  .code .l.on { background: color-mix(in srgb, var(--text) 7%, transparent); }
+  .code .l.on::before { color: var(--muted); }
+
+  [popover] { color: var(--text); }
+  [popover]::backdrop { background: rgb(8 12 18 / 0.55); }
+}

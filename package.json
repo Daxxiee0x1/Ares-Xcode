@@ -1,0 +1,18 @@
+{
+  "name": "ares-xcode",
+  "version": "0.1.0",
+  "description": "Ares Xcode: prototipe antarmuka IDE web minim tombol (HTML + Tailwind)",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev": "tailwindcss -i src/input.css -o public/assets/css/output.css --watch",
+    "build": "tailwindcss -i src/input.css -o public/assets/css/output.css --minify"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.5",
+    "tailwindcss": "^4.3.5"
+  },
+  "private": true,
+  "license": "UNLICENSED"
+}
