@@ -1,0 +1,33 @@
+{
+  "kontributor": {
+    "id": 2,
+    "nama": "Siti Rahmawati",
+    "peran": "Desain UI"
+  },
+  "commit": [
+    {
+      "hash": "5d2b8a4",
+      "tanggal": "2026-11-21T11:30:00+07:00",
+      "pesan": "Selaraskan warna tema terang dan gelap",
+      "deskripsi": "Token warna disamakan dengan prototipe: krem untuk terang, slate untuk gelap. Kontras teks diperiksa minimal 4,5 banding 1."
+    },
+    {
+      "hash": "a47e0c6",
+      "tanggal": "2026-11-19T13:10:00+07:00",
+      "pesan": "Perbesar target sentuh tombol menjadi 44 px",
+      "deskripsi": "Semua tombol diberi tinggi minimal 44 px agar mudah ditekan jempol di layar ponsel."
+    },
+    {
+      "hash": "1c9f3d8",
+      "tanggal": "2026-11-16T09:50:00+07:00",
+      "pesan": "Rapikan jarak antar baris daftar tugas",
+      "deskripsi": "Jarak baris memakai kelipatan 8 px sesuai grid 8pt supaya daftar terasa konsisten."
+    },
+    {
+      "hash": "94b7e21",
+      "tanggal": "2026-11-13T15:45:00+07:00",
+      "pesan": "Buat logo versi kuning sinyal",
+      "deskripsi": "Logo huruf A dengan dua garis dan satu palang dibuat sebagai SVG agar tajam di semua ukuran."
+    }
+  ]
+}

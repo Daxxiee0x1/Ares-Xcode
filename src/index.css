@@ -1,0 +1,112 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Atkinson Hyperlegible Next";
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url("./assets/fonts/atkinson-next.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Atkinson Hyperlegible Mono";
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url("./assets/fonts/atkinson-mono.woff2") format("woff2");
+}
+
+/* ---- Token warna: sama dengan prototipe Ares Xcode (terang krem, gelap slate) ---- */
+:root {
+  --bg: #f7f5ee;
+  --surface: #ffffff;
+  --raised: #efede4;
+  --text: #1f1e1d;
+  --muted: #5b5a57;
+  --dim: #7a7873;
+  --line: rgb(31 30 29 / 0.14);
+  --ok: #1e7a3c;
+  --bad: #b3261e;
+  --tok-meta: #6d4ae0;
+  --tok-tag: #0b6bb5;
+  --tok-attr: #a55a00;
+  --tok-str: #1e7a3c;
+  --tok-punc: #6b7280;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #141b26;
+    --surface: #1b2431;
+    --raised: #243042;
+    --text: #eaf0f7;
+    --muted: #a9b5c6;
+    --dim: #8896ab;
+    --line: rgb(234 240 247 / 0.1);
+    --ok: #8ee0a6;
+    --bad: #ff9b94;
+    --tok-meta: #b79cff;
+    --tok-tag: #6fc3ff;
+    --tok-attr: #ffc27a;
+    --tok-str: #8ee0a6;
+    --tok-punc: #9aa7ba;
+    color-scheme: dark;
+  }
+}
+
+@theme inline {
+  --font-sans: "Atkinson Hyperlegible Next", "Atkinson Hyperlegible", system-ui, sans-serif;
+  --font-mono: "Atkinson Hyperlegible Mono", ui-monospace, monospace;
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-ink: var(--text);
+  --color-muted: var(--muted);
+  --color-dim: var(--dim);
+  --color-line: var(--line);
+  --color-ok: var(--ok);
+  --color-bad: var(--bad);
+}
+@theme {
+  --color-signal: #ffc72c;
+  --color-signal-ink: #16130a;
+}
+
+html, body, #root { height: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font-sans); font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased; overflow: hidden; }
+
+/* ---- Kelas komponen: dipakai di JSX agar kode yang tampil di video ringkas ---- */
+@layer components {
+  .kartu { @apply rounded-2xl border border-line bg-raised/50 p-4; }
+  .judul { @apply text-lg font-bold tracking-tight; }
+  .bantu { @apply text-sm text-muted; }
+
+  .btn { @apply inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-xl border border-line px-4 font-medium text-ink hover:bg-raised focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal disabled:cursor-not-allowed disabled:opacity-40; }
+  .btn-utama { @apply inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-xl bg-signal px-4 font-bold text-signal-ink hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink disabled:cursor-not-allowed disabled:opacity-40; }
+  .btn-ikon { @apply inline-flex size-11 cursor-pointer items-center justify-center rounded-xl border border-line text-lg font-bold text-ink hover:bg-raised focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal disabled:cursor-not-allowed disabled:opacity-40; }
+
+  .input { @apply min-h-11 w-full min-w-0 rounded-xl border border-line bg-surface px-3 text-ink placeholder:text-dim focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-signal; }
+
+  .pil { @apply inline-flex min-h-11 cursor-pointer items-center rounded-xl border border-line px-4 text-sm font-medium text-muted hover:bg-raised; }
+  .pil[aria-pressed="true"], .pil[aria-checked="true"] { @apply border-transparent bg-ink text-bg; }
+
+  .baris { @apply flex min-h-11 items-center gap-3 rounded-lg px-3 hover:bg-raised; }
+  .stat { @apply mt-4 border-t border-line pt-3 font-mono text-xs text-muted; }
+
+  .skeleton { @apply h-14 animate-pulse rounded-xl bg-raised; }
+
+}
+
+
+/* ---- Panel kode (CodeMirror) ----
+   Sengaja di luar @layer dan dengan awalan `html` agar menang atas gaya bawaan CodeMirror. */
+html .cm-editor { height: 100%; background: transparent; font-family: var(--font-mono); font-size: var(--ukuran-kode, 14px); color: var(--text); }
+html .cm-editor.cm-focused { outline: none; }
+html .cm-editor .cm-scroller { font-family: var(--font-mono); line-height: 1.5; overflow: auto; }
+html .cm-editor .cm-content { padding: 1rem 0 6rem; caret-color: var(--text); }
+html .cm-editor .cm-gutters { background: transparent; border: 0; color: var(--dim); }
+html .cm-editor .cm-lineNumbers .cm-gutterElement { padding: 0 1rem 0 1.25rem; min-width: 3rem; }
+html .cm-editor .cm-line { padding-left: 0.5rem; }
+html .cm-editor .cm-selectionBackground, html .cm-editor.cm-focused .cm-selectionBackground { background: color-mix(in srgb, var(--text) 16%, transparent); }
+
+/* Latar gelap di belakang <dialog> */
+dialog::backdrop { background: rgb(8 12 18 / 0.55); }

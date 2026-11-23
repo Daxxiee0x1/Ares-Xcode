@@ -1,18 +1,27 @@
 {
-  "name": "ares-xcode",
+  "name": "ares-xcode-react",
+  "private": true,
   "version": "0.1.0",
-  "description": "Ares Xcode: prototipe antarmuka IDE web minim tombol (HTML + Tailwind)",
-  "directories": {
-    "doc": "docs"
-  },
+  "type": "module",
   "scripts": {
-    "dev": "tailwindcss -i src/input.css -o public/assets/css/output.css --watch",
-    "build": "tailwindcss -i src/input.css -o public/assets/css/output.css --minify"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@codemirror/lang-css": "^6.3.1",
+    "@codemirror/lang-html": "^6.4.12",
+    "@codemirror/language": "^6.13.1",
+    "@codemirror/state": "^6.7.6",
+    "@codemirror/view": "^6.43.15",
+    "@lezer/highlight": "^1.2.5",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
   },
   "devDependencies": {
-    "@tailwindcss/cli": "^4.3.5",
-    "tailwindcss": "^4.3.5"
-  },
-  "private": true,
-  "license": "UNLICENSED"
+    "@tailwindcss/vite": "^4.3.5",
+    "@vitejs/plugin-react": "^6.3.0",
+    "tailwindcss": "^4.3.5",
+    "vite": "^8.3.8"
+  }
 }
