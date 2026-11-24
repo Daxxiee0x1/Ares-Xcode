@@ -1,0 +1,33 @@
+{
+  "kontributor": {
+    "id": 4,
+    "nama": "Dewi Lestari",
+    "peran": "Dokumentasi"
+  },
+  "commit": [
+    {
+      "hash": "d95b3a1",
+      "tanggal": "2026-11-22T08:55:00+07:00",
+      "pesan": "Tulis cara menjalankan proyek di README",
+      "deskripsi": "Menambahkan langkah npm install, npm run dev, dan npm run build beserta persyaratan versi Node."
+    },
+    {
+      "hash": "40e7c82",
+      "tanggal": "2026-11-20T13:25:00+07:00",
+      "pesan": "Jelaskan kapan useEffect berjalan",
+      "deskripsi": "Catatan singkat tiga kasus: tanpa array berjalan setiap render, array kosong hanya sekali saat muncul, dan array berisi berjalan saat nilainya berubah."
+    },
+    {
+      "hash": "b3f1d96",
+      "tanggal": "2026-11-18T09:40:00+07:00",
+      "pesan": "Tambah komentar di kode komponen",
+      "deskripsi": "Setiap useState dan useEffect diberi komentar bahasa Indonesia yang menjelaskan fungsinya."
+    },
+    {
+      "hash": "6a8c05e",
+      "tanggal": "2026-11-15T15:00:00+07:00",
+      "pesan": "Susun naskah video demo",
+      "deskripsi": "Urutan demo: tampilkan kode, jalankan komponen, lalu jelaskan state dan efek yang terjadi."
+    }
+  ]
+}

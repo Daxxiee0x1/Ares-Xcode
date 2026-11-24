@@ -1,0 +1,33 @@
+{
+  "kontributor": {
+    "id": 5,
+    "nama": "Rizky Pratama",
+    "peran": "Infrastruktur"
+  },
+  "commit": [
+    {
+      "hash": "8b1e7d3",
+      "tanggal": "2026-11-21T19:10:00+07:00",
+      "pesan": "Atur base path agar build bisa dibuka di mana saja",
+      "deskripsi": "Vite memakai base ./ sehingga hasil build jalan dari folder atau subpath mana pun, termasuk GitHub Pages."
+    },
+    {
+      "hash": "e50c9a2",
+      "tanggal": "2026-11-19T16:30:00+07:00",
+      "pesan": "Pindahkan data dummy ke folder public/data",
+      "deskripsi": "File JSON ditaruh di public agar bisa diambil lewat fetch tanpa perlu server tambahan."
+    },
+    {
+      "hash": "39d4b6f",
+      "tanggal": "2026-11-16T12:00:00+07:00",
+      "pesan": "Tambah jeda buatan 700 ms pada permintaan",
+      "deskripsi": "Jeda dibuat supaya tampilan loading terlihat jelas saat demo. Dihapus saat memakai API sungguhan."
+    },
+    {
+      "hash": "c7a2f80",
+      "tanggal": "2026-11-13T09:20:00+07:00",
+      "pesan": "Instal Tailwind v4 lewat plugin Vite",
+      "deskripsi": "Tailwind dipasang dengan @tailwindcss/vite sehingga tidak perlu file konfigurasi terpisah."
+    }
+  ]
+}
