@@ -1,26 +1,35 @@
 import { useEffect, useRef } from 'react'
 
-// Lembar = jendela kecil di atas halaman (palet, daftar file, panel fitur).
-// Memakai elemen <dialog> bawaan browser: Esc menutup, fokus terkunci di dalamnya.
 export default function Lembar({ buka, onTutup, label, className = '', children }) {
-  const ref = useRef(null)
+  const dialogRef = useRef(null)
+  const pemicuSebelumnyaRef = useRef(null)
 
-  // Sinkronkan state `buka` dengan <dialog>: buka -> showModal(), tutup -> close()
   useEffect(() => {
-    const d = ref.current
-    if (buka && !d.open) d.showModal()
-    if (!buka && d.open) d.close()
+    const d = dialogRef.current
+    if (!d) return
+
+    if (buka && !d.open) {
+      pemicuSebelumnyaRef.current = document.activeElement
+      d.showModal()
+    } else if (!buka && d.open) {
+      d.close()
+      pemicuSebelumnyaRef.current?.focus?.()
+    }
   }, [buka])
 
   return (
     <dialog
-      ref={ref}
+      ref={dialogRef}
       aria-label={label}
-      // Esc: jangan biarkan browser menutup sendiri; ubah state, lalu efek di atas yang menutup
-      onCancel={(e) => { e.preventDefault(); onTutup() }}
-      // Klik di area gelap (backdrop) = target-nya <dialog> itu sendiri
-      onClick={(e) => e.target === ref.current && onTutup()}
-      className={`border border-line bg-surface p-0 text-ink shadow-2xl ${className}`}
+      onCancel={(e) => {
+        // Keep React state as the single source of truth when Escape is pressed.
+        e.preventDefault()
+        onTutup()
+      }}
+      onClick={(e) => {
+        if (e.target === dialogRef.current) onTutup()
+      }}
+      className={`border border-line bg-surface p-0 text-ink shadow-[var(--shadow-elevated)] overscroll-contain ${className}`}
     >
       {children}
     </dialog>

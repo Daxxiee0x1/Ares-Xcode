@@ -1,10 +1,8 @@
-// Isi tiga file contoh yang tampil di editor Ares Xcode.
-// Diambil dari prototipe statis; berkas yang sama ada di public/preview/.
-
-export const BERKAS = [
+export const BERKAS_AWAL = [
   {
     nama: 'index.html',
     bahasa: 'html',
+    ringkasan: 'Halaman beranda contoh untuk pratinjau langsung.',
     kode: `<!doctype html>
 <html lang="id">
 <head>
@@ -27,6 +25,7 @@ export const BERKAS = [
   {
     nama: 'about.html',
     bahasa: 'html',
+    ringkasan: 'Halaman sekunder yang berbagi lembar gaya yang sama.',
     kode: `<!doctype html>
 <html lang="id">
 <head>
@@ -49,6 +48,7 @@ export const BERKAS = [
   {
     nama: 'style.css',
     bahasa: 'css',
+    ringkasan: 'Token warna kertas, tinta, dan sinyal kuning untuk pratinjau.',
     kode: `:root {
   --kertas: #f6f3ea;
   --ink: #1c1b19;

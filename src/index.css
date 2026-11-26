@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @font-face {
   font-family: "Atkinson Hyperlegible Next";
@@ -7,6 +7,7 @@
   font-display: swap;
   src: url("./assets/fonts/atkinson-next.woff2") format("woff2");
 }
+
 @font-face {
   font-family: "Atkinson Hyperlegible Mono";
   font-style: normal;
@@ -15,33 +16,41 @@
   src: url("./assets/fonts/atkinson-mono.woff2") format("woff2");
 }
 
-/* ---- Token warna: sama dengan prototipe Ares Xcode (terang krem, gelap slate) ---- */
 :root {
   --bg: #f7f5ee;
   --surface: #ffffff;
   --raised: #efede4;
   --text: #1f1e1d;
   --muted: #5b5a57;
-  --dim: #7a7873;
-  --line: rgb(31 30 29 / 0.14);
+  --dim: #5d5b56;
+  --line: rgb(31 30 29 / 0.16);
+  --line-strong: rgb(31 30 29 / 0.28);
   --ok: #1e7a3c;
   --bad: #b3261e;
   --tok-meta: #6d4ae0;
   --tok-tag: #0b6bb5;
-  --tok-attr: #a55a00;
+  --tok-attr: #995200;
   --tok-str: #1e7a3c;
-  --tok-punc: #6b7280;
+  --tok-punc: #5b616b;
+  --shadow-elevated:
+    0 0 0 1px oklch(0 0 0 / 0.08),
+    0 8px 24px -6px oklch(0 0 0 / 0.12);
+  --shadow-card:
+    0 0 0 1px oklch(0 0 0 / 0.07),
+    0 1px 2px 0 oklch(0 0 0 / 0.04);
   color-scheme: light;
 }
+
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --bg: #141b26;
     --surface: #1b2431;
     --raised: #243042;
     --text: #eaf0f7;
     --muted: #a9b5c6;
-    --dim: #8896ab;
-    --line: rgb(234 240 247 / 0.1);
+    --dim: #95a3b8;
+    --line: rgb(234 240 247 / 0.14);
+    --line-strong: rgb(234 240 247 / 0.28);
     --ok: #8ee0a6;
     --bad: #ff9b94;
     --tok-meta: #b79cff;
@@ -49,8 +58,35 @@
     --tok-attr: #ffc27a;
     --tok-str: #8ee0a6;
     --tok-punc: #9aa7ba;
+    --shadow-elevated:
+      0 0 0 1px oklch(1 0 0 / 0.12),
+      0 12px 32px -8px oklch(0 0 0 / 0.55);
+    --shadow-card: 0 0 0 1px oklch(1 0 0 / 0.09);
     color-scheme: dark;
   }
+}
+
+:root[data-theme="dark"] {
+  --bg: #141b26;
+  --surface: #1b2431;
+  --raised: #243042;
+  --text: #eaf0f7;
+  --muted: #a9b5c6;
+  --dim: #95a3b8;
+  --line: rgb(234 240 247 / 0.14);
+  --line-strong: rgb(234 240 247 / 0.28);
+  --ok: #8ee0a6;
+  --bad: #ff9b94;
+  --tok-meta: #b79cff;
+  --tok-tag: #6fc3ff;
+  --tok-attr: #ffc27a;
+  --tok-str: #8ee0a6;
+  --tok-punc: #9aa7ba;
+  --shadow-elevated:
+    0 0 0 1px oklch(1 0 0 / 0.12),
+    0 12px 32px -8px oklch(0 0 0 / 0.55);
+  --shadow-card: 0 0 0 1px oklch(1 0 0 / 0.09);
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -63,50 +99,370 @@
   --color-muted: var(--muted);
   --color-dim: var(--dim);
   --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
   --color-ok: var(--ok);
   --color-bad: var(--bad);
 }
+
 @theme {
   --color-signal: #ffc72c;
   --color-signal-ink: #16130a;
 }
 
-html, body, #root { height: 100%; }
-body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font-sans); font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased; overflow: hidden; }
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
 
-/* ---- Kelas komponen: dipakai di JSX agar kode yang tampil di video ringkas ---- */
-@layer components {
-  .kartu { @apply rounded-2xl border border-line bg-raised/50 p-4; }
-  .judul { @apply text-lg font-bold tracking-tight; }
-  .bantu { @apply text-sm text-muted; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+  }
 
-  .btn { @apply inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-xl border border-line px-4 font-medium text-ink hover:bg-raised focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal disabled:cursor-not-allowed disabled:opacity-40; }
-  .btn-utama { @apply inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-xl bg-signal px-4 font-bold text-signal-ink hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink disabled:cursor-not-allowed disabled:opacity-40; }
-  .btn-ikon { @apply inline-flex size-11 cursor-pointer items-center justify-center rounded-xl border border-line text-lg font-bold text-ink hover:bg-raised focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal disabled:cursor-not-allowed disabled:opacity-40; }
+  button:not(:disabled),
+  a[href],
+  summary,
+  select:not(:disabled),
+  label[for],
+  input[type="checkbox"]:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
 
-  .input { @apply min-h-11 w-full min-w-0 rounded-xl border border-line bg-surface px-3 text-ink placeholder:text-dim focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-signal; }
+  button:disabled,
+  select:disabled,
+  input:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
 
-  .pil { @apply inline-flex min-h-11 cursor-pointer items-center rounded-xl border border-line px-4 text-sm font-medium text-muted hover:bg-raised; }
-  .pil[aria-pressed="true"], .pil[aria-checked="true"] { @apply border-transparent bg-ink text-bg; }
+  :focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 2px;
+  }
 
-  .baris { @apply flex min-h-11 items-center gap-3 rounded-lg px-3 hover:bg-raised; }
-  .stat { @apply mt-4 border-t border-line pt-3 font-mono text-xs text-muted; }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
 
-  .skeleton { @apply h-14 animate-pulse rounded-xl bg-raised; }
-
+  p {
+    text-wrap: pretty;
+  }
 }
 
+@layer components {
+  .skip-link {
+    position: fixed;
+    inset-block-start: 0.75rem;
+    inset-inline-start: 0.75rem;
+    z-index: 60;
+    transform: translateY(-180%);
+    border-radius: 0.75rem;
+    background: var(--text);
+    color: var(--bg);
+    padding: 0.625rem 1rem;
+    font-weight: 700;
+    font-size: 0.875rem;
+    transition-property: transform;
+    transition-duration: 150ms;
+    transition-timing-function: ease-out;
+  }
 
-/* ---- Panel kode (CodeMirror) ----
-   Sengaja di luar @layer dan dengan awalan `html` agar menang atas gaya bawaan CodeMirror. */
-html .cm-editor { height: 100%; background: transparent; font-family: var(--font-mono); font-size: var(--ukuran-kode, 14px); color: var(--text); }
-html .cm-editor.cm-focused { outline: none; }
-html .cm-editor .cm-scroller { font-family: var(--font-mono); line-height: 1.5; overflow: auto; }
-html .cm-editor .cm-content { padding: 1rem 0 6rem; caret-color: var(--text); }
-html .cm-editor .cm-gutters { background: transparent; border: 0; color: var(--dim); }
-html .cm-editor .cm-lineNumbers .cm-gutterElement { padding: 0 1rem 0 1.25rem; min-width: 3rem; }
-html .cm-editor .cm-line { padding-left: 0.5rem; }
-html .cm-editor .cm-selectionBackground, html .cm-editor.cm-focused .cm-selectionBackground { background: color-mix(in srgb, var(--text) 16%, transparent); }
+  .skip-link:focus-visible {
+    transform: translateY(0);
+  }
 
-/* Latar gelap di belakang <dialog> */
-dialog::backdrop { background: rgb(8 12 18 / 0.55); }
+  .kartu {
+    border-radius: 1rem;
+    background: var(--surface);
+    box-shadow: var(--shadow-card);
+    padding: 1.25rem;
+  }
+
+  .kartu-datar {
+    border-radius: 1rem;
+    border: 1px solid var(--line);
+    background: color-mix(in srgb, var(--raised) 55%, transparent);
+    padding: 1.25rem;
+  }
+
+  .btn {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 0.75rem;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    padding-inline: 1rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text);
+    transition-property: background-color, border-color, transform, color;
+    transition-duration: 150ms;
+    transition-timing-function: ease-out;
+  }
+
+  .btn:hover:not(:disabled) {
+    background: var(--raised);
+  }
+
+  .btn:active:not(:disabled) {
+    transform: scale(0.96);
+  }
+
+  .btn:disabled {
+    opacity: 0.42;
+  }
+
+  .btn-utama {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 0.75rem;
+    background: var(--color-signal);
+    padding-inline: 1.125rem;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--color-signal-ink);
+    transition-property: filter, transform;
+    transition-duration: 150ms;
+    transition-timing-function: ease-out;
+  }
+
+  .btn-utama:hover:not(:disabled) {
+    filter: brightness(0.94);
+  }
+
+  .btn-utama:active:not(:disabled) {
+    transform: scale(0.96);
+  }
+
+  .btn-utama:disabled {
+    opacity: 0.42;
+  }
+
+  .btn-tinta {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 0.75rem;
+    background: var(--text);
+    padding-inline: 1.125rem;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--bg);
+    transition-property: opacity, transform;
+    transition-duration: 150ms;
+    transition-timing-function: ease-out;
+  }
+
+  .btn-tinta:hover:not(:disabled) {
+    opacity: 0.9;
+  }
+
+  .btn-tinta:active:not(:disabled) {
+    transform: scale(0.96);
+  }
+
+  .btn-ikon {
+    display: inline-flex;
+    width: 2.75rem;
+    height: 2.75rem;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.75rem;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text);
+    transition-property: background-color, transform;
+    transition-duration: 150ms;
+    transition-timing-function: ease-out;
+  }
+
+  .btn-ikon:hover:not(:disabled) {
+    background: var(--raised);
+  }
+
+  .btn-ikon:active:not(:disabled) {
+    transform: scale(0.96);
+  }
+
+  .btn-ikon:disabled {
+    opacity: 0.4;
+  }
+
+  .input-ares {
+    min-height: 2.75rem;
+    width: 100%;
+    min-width: 0;
+    border-radius: 0.75rem;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    padding-inline: 0.875rem;
+    font-size: 1rem;
+    color: var(--text);
+  }
+
+  @media (min-width: 640px) {
+    .input-ares {
+      font-size: 0.9375rem;
+    }
+  }
+
+  .input-ares::placeholder {
+    color: var(--dim);
+  }
+
+  .pil {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 0.75rem;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    padding-inline: 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--muted);
+    transition-property: background-color, color, border-color, transform;
+    transition-duration: 150ms;
+    transition-timing-function: ease-out;
+  }
+
+  .pil:hover {
+    background: var(--raised);
+    color: var(--text);
+  }
+
+  .pil:active {
+    transform: scale(0.96);
+  }
+
+  .pil[aria-pressed="true"],
+  .pil[aria-checked="true"] {
+    border-color: transparent;
+    background: var(--text);
+    color: var(--bg);
+  }
+
+  .kbd-cap {
+    display: inline-flex;
+    min-width: 1.5rem;
+    height: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.375rem;
+    border: 1px solid var(--line-strong);
+    background: var(--raised);
+    padding-inline: 0.4375rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  .stat-bar {
+    border-top: 1px solid var(--line);
+    padding-top: 0.875rem;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .skeleton-bar {
+    height: 4.25rem;
+    border-radius: 0.75rem;
+    background: var(--raised);
+    animation: ares-pulse 1.6s ease-in-out infinite;
+  }
+}
+
+@keyframes ares-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.95;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Outside @layer with html prefix so CodeMirror default theme styles do not override ours. */
+html .cm-editor {
+  height: 100%;
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: var(--ukuran-kode, 14px);
+  color: var(--text);
+}
+
+html .cm-editor.cm-focused {
+  outline: none;
+}
+
+html .cm-editor .cm-scroller {
+  font-family: var(--font-mono);
+  line-height: 1.55;
+  overflow: auto;
+}
+
+html .cm-editor .cm-content {
+  padding: 1rem 0 6rem;
+  caret-color: var(--text);
+}
+
+html .cm-editor .cm-gutters {
+  background: transparent;
+  border: 0;
+  color: var(--dim);
+}
+
+html .cm-editor .cm-lineNumbers .cm-gutterElement {
+  padding: 0 1rem 0 1.25rem;
+  min-width: 3rem;
+  font-variant-numeric: tabular-nums;
+}
+
+html .cm-editor .cm-line {
+  padding-left: 0.5rem;
+}
+
+html .cm-editor .cm-selectionBackground,
+html .cm-editor.cm-focused .cm-selectionBackground {
+  background: color-mix(in srgb, var(--text) 18%, transparent);
+}
+
+dialog::backdrop {
+  background: rgb(8 12 18 / 0.58);
+}

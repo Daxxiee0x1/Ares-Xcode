@@ -8,7 +8,7 @@ Aplikasi ini berjalan langsung di browser tanpa memerlukan instalasi, akun, maup
 
 ## Fitur Utama
 
-- **Code Editor:** Mendukung HTML, Tailwind, dan menggunakan CodeMirror 6 (kemungkinan memakai javascript).
+- **Code Editor:** Mendukung HTML, Tailwind, dan menggunakan CodeMirror 6.
 - **Command Palette:** Mengakses berbagai perintah melalui satu pintu.
 - **Live Preview:** Melihat hasil kode secara langsung.
 - **Local Storage:** Menyimpan proyek secara otomatis menggunakan IndexedDB.

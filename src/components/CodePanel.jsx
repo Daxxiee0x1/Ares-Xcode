@@ -6,8 +6,7 @@ import { html } from '@codemirror/lang-html'
 import { css } from '@codemirror/lang-css'
 import { tags as t } from '@lezer/highlight'
 
-// Warna sintaks memakai token yang sama dengan prototipe Ares Xcode (lihat index.css)
-const gaya = HighlightStyle.define([
+const gayaSintaks = HighlightStyle.define([
   { tag: [t.keyword, t.documentMeta, t.atom], color: 'var(--tok-meta)' },
   { tag: [t.string, t.attributeValue], color: 'var(--tok-str)' },
   { tag: [t.number, t.unit, t.color], color: 'var(--tok-attr)' },
@@ -17,30 +16,45 @@ const gaya = HighlightStyle.define([
   { tag: [t.punctuation, t.bracket, t.angleBracket, t.operator, t.separator], color: 'var(--tok-punc)' },
 ])
 
-const BAHASA = {
+const BAHASA_EXT = {
   html: () => html(),
   css: () => css(),
 }
 
-export default function CodePanel({ kode, bahasa }) {
-  const induk = useRef(null)
+export default function CodePanel({ kode, bahasa, readOnly = true, onChange }) {
+  const indukRef = useRef(null)
+  const onChangeRef = useRef(onChange)
+  onChangeRef.current = onChange
 
   useEffect(() => {
+    if (!indukRef.current) return
+
+    const extensions = [
+      lineNumbers(),
+      BAHASA_EXT[bahasa](),
+      syntaxHighlighting(gayaSintaks),
+      EditorView.lineWrapping,
+      EditorState.readOnly.of(readOnly),
+      EditorView.editable.of(!readOnly),
+      EditorView.updateListener.of((update) => {
+        if (update.docChanged && onChangeRef.current) {
+          onChangeRef.current(update.state.doc.toString())
+        }
+      }),
+    ]
+
     const tampilan = new EditorView({
-      parent: induk.current,
+      parent: indukRef.current,
       state: EditorState.create({
         doc: kode.replace(/\n$/, ''),
-        extensions: [
-          lineNumbers(),
-          BAHASA[bahasa](),
-          syntaxHighlighting(gaya),
-          EditorView.lineWrapping,
-          EditorState.readOnly.of(true),
-        ],
+        extensions,
       }),
     })
+
     return () => tampilan.destroy()
+    // Parent passes a composite key when switching files, resetting, or toggling readOnly.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return <div ref={induk} className="h-full" />
+  return <div ref={indukRef} className="h-full" />
 }
